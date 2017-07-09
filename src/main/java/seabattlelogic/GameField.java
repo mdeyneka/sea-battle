@@ -27,24 +27,28 @@ public class GameField {
         setGameFieldAsEmpty();
     }
 
-    public void setShip(int positionX, int positionY, Direction direction, int lenght) {
+    public void setShip(int positionX, int positionY, Direction direction, int lenght) throws GameFieldException {
         switch(direction) {
             case NORTH:
+                if (((positionY + 1) - lenght) < 0) throw new GameFieldException("North");
                 for (int i = 0; i < lenght; ++i) {
                     fields[positionY - i][positionX] = Field.CONTAIN;
                 }
                 break;
             case SOUTH:
+                if ((positionY + lenght) > (fields[fields.length - 1].length)) throw new GameFieldException("South");
                 for (int i = 0; i < lenght; ++i) {
                     fields[positionY + i][positionX] = Field.CONTAIN;
                 }
                 break;
             case WEST:
+                if (((positionX + 1) - lenght) < 0) throw new GameFieldException("West");
                 for (int i = 0; i < lenght; ++i) {
                     fields[positionY][positionX - i] = Field.CONTAIN;
                 }
                 break;
             case EAST:
+                if ((positionX + lenght) > fields.length) throw new GameFieldException("East");
                 for (int i = 0; i < lenght; ++i) {
                     fields[positionY][positionX + i] = Field.CONTAIN;
                 }

@@ -1,12 +1,19 @@
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import static org.junit.Assert.*;
+
+import org.junit.rules.ExpectedException;
 import seabattlelogic.GameField;
+import seabattlelogic.GameFieldException;
 
 public class GameFieldTest {
 
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
     @Test
-    public void testSetShipNorth() {
+    public void testSetShipNorth() throws GameFieldException {
         GameField gameField = new GameField();
         gameField.setShip(1, 1, GameField.Direction.NORTH, 2);
 
@@ -44,7 +51,7 @@ public class GameFieldTest {
     }
 
     @Test
-    public void testSetShipSouth() {
+    public void testSetShipSouth() throws GameFieldException {
         GameField gameField = new GameField();
         gameField.setShip(1, 1, GameField.Direction.SOUTH, 3);
 
@@ -82,7 +89,7 @@ public class GameFieldTest {
     }
 
     @Test
-    public void testSetShipWest() {
+    public void testSetShipWest() throws GameFieldException {
         GameField gameField = new GameField();
         gameField.setShip(5, 5, GameField.Direction.WEST, 4);
 
@@ -120,7 +127,7 @@ public class GameFieldTest {
     }
 
     @Test
-    public void testSetShipEast() {
+    public void testSetShipEast() throws GameFieldException {
         GameField gameField = new GameField();
         gameField.setShip(2, 3, GameField.Direction.EAST, 3);
 
@@ -155,5 +162,29 @@ public class GameFieldTest {
         assertArrayEquals(row7, gameField.fields[7]);
         assertArrayEquals(row8, gameField.fields[8]);
         assertArrayEquals(row9, gameField.fields[9]);
+    }
+
+    @Test
+    public void testSetShipNorthException() throws GameFieldException {
+        GameField gameField = new GameField();
+        thrown.expect(GameFieldException.class);
+        thrown.expectMessage("North");
+        gameField.setShip(2, 2, GameField.Direction.NORTH, 4);
+    }
+
+    @Test
+    public void testSetShipWestException() throws GameFieldException {
+        GameField gameField = new GameField();
+        thrown.expect(GameFieldException.class);
+        thrown.expectMessage("West");
+        gameField.setShip(1, 7, GameField.Direction.WEST, 3);
+    }
+
+    @Test
+    public void testSetShipEastException() throws GameFieldException {
+        GameField gameField = new GameField();
+        thrown.expect(GameFieldException.class);
+        thrown.expectMessage("East");
+        gameField.setShip(8, 7, GameField.Direction.EAST, 3);
     }
 }

@@ -1,13 +1,15 @@
 import seabattlelogic.GameField;
+import seabattlelogic.GameFieldException;
 
-/**
- * Created by Virus on 01.07.2017.
- */
 public class Application {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws GameFieldException {
         GameField gameField = new GameField();
-        gameField.setShip(2,3, GameField.Direction.EAST, 3);
+        try {
+            gameField.setShip(7, 7, GameField.Direction.EAST, 4);
+        } catch (GameFieldException e) {
+            System.out.println(e.getMessage());
+        }
         gameField.printGameField();
     }
 
